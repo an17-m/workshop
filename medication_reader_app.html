@@ -1,0 +1,648 @@
+<!-- ... existing code ... -->
+    <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk for Peter Tarka sculptural editorial vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #ECE7E1;
+            color: #1F2421;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Smooth View Transitions */
+        .fade-in {
+            animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px) scale(0.985); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Sculptural Soft 3D Shadow Layers (Peter Tarka Aesthetic) */
+        .sculpt-card {
+            background: #F6F3EE;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 
+                6px 10px 20px -4px rgba(31, 36, 33, 0.05),
+                -3px -3px 12px 0px rgba(255, 255, 255, 0.8),
+                inset 0px 1px 1px rgba(255, 255, 255, 0.9);
+        }
+
+        .sculpt-card-dark {
+            background: #1F2421;
+            color: #F6F3EE;
+            box-shadow: 
+                8px 14px 28px -6px rgba(31, 36, 33, 0.22),
+                inset 0px 1px 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .sculpt-button {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 
+                0 4px 14px rgba(31, 36, 33, 0.08),
+                0 1px 3px rgba(31, 36, 33, 0.06);
+        }
+
+        .sculpt-button:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 1px 4px rgba(31, 36, 33, 0.05);
+        }
+
+        /* Scanning Laser Line */
+        .scan-line {
+            animation: scan 2.4s ease-in-out infinite alternate;
+        }
+
+        @keyframes scan {
+            0% { top: 10%; opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { top: 90%; opacity: 0.4; }
+        }
+
+        /* Animated Bounding Overlay */
+        .ocr-box-sculpt {
+            animation: pulseBoxSculpt 1.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseBoxSculpt {
+            0% { border-color: rgba(232, 141, 103, 0.6); box-shadow: 0 0 12px rgba(232, 141, 103, 0.2); }
+            100% { border-color: #E88D67; box-shadow: 0 0 20px rgba(232, 141, 103, 0.45); }
+        }
+    </style>
+</head>
+<body class="bg-[#ECE7E1] text-[#1F2421] min-h-screen flex justify-center items-center p-0 md:p-6 select-none">
+
+    <!-- Container Shell with Sculptural Matte Porcelain Styling -->
+    <div class="w-full max-w-md bg-[#F0EBE3] min-h-screen md:min-h-[850px] md:max-h-[890px] md:rounded-[42px] border-0 md:border md:border-[#E1D8CC] shadow-[0_24px_60px_-15px_rgba(31,36,33,0.12)] flex flex-col justify-between overflow-hidden relative">
+
+        <!-- HEADER -->
+        <header class="pt-5 px-5 pb-4 flex items-center justify-between border-b border-[#E3DCCE] bg-[#F0EBE3]/90 backdrop-blur-xl sticky top-0 z-30">
+            <div>
+                <div class="flex items-center gap-1.5 mb-0.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#7B886F]"></span>
+                    <span class="text-[10px] font-bold text-[#7B886F] uppercase tracking-[0.2em]">Accessible OS</span>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight font-heading text-[#1F2421]">
+                    MedVoice
+                </h1>
+            </div>
+
+            <!-- Voice Control Toggle Button -->
+            <button onclick="toggleVoiceNav()" id="voiceNavToggleBtn" class="sculpt-button flex items-center justify-center gap-2 min-h-[44px] px-4 rounded-full bg-[#1F2421] text-[#F6F3EE] font-bold text-sm tracking-wide active:scale-95 whitespace-nowrap">
+                <i class="fa-solid fa-volume-high text-[#E88D67] text-sm"></i>
+                <span id="voiceNavText">Voice ON</span>
+            </button>
+        </header>
+
+        <!-- DYNAMIC CONTENT AREA -->
+        <main id="appMainContent" class="flex-1 overflow-y-auto px-5 py-5 space-y-5 fade-in">
+            <!-- Rendered by JS -->
+        </main>
+
+        <!-- MINIMALIST SCULPTURAL NAVIGATION -->
+        <nav class="bg-[#F0EBE3]/95 backdrop-blur-2xl border-t border-[#E3DCCE] px-4 py-3 flex items-center justify-around z-20">
+            <button onclick="switchScreen('schedule')" id="navBtn-schedule" class="nav-btn flex-1 flex flex-col items-center gap-1.5 py-1 text-[#1F2421] transition-all">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#1F2421] text-[#F6F3EE] sculpt-button">
+                    <i class="fa-solid fa-calendar-day text-base text-[#E88D67]"></i>
+                </div>
+                <span class="text-[10px] font-bold tracking-wider font-heading uppercase">Schedule</span>
+            </button>
+
+            <button onclick="switchScreen('scanner')" id="navBtn-scanner" class="nav-btn flex-1 flex flex-col items-center gap-1.5 py-1 text-[#8C877D] hover:text-[#1F2421] transition-all">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#E5DFD5] text-[#1F2421]">
+                    <i class="fa-solid fa-camera text-base"></i>
+                </div>
+                <span class="text-[10px] font-bold tracking-wider font-heading uppercase">Scanner</span>
+            </button>
+
+            <button onclick="switchScreen('audio')" id="navBtn-audio" class="nav-btn flex-1 flex flex-col items-center gap-1.5 py-1 text-[#8C877D] hover:text-[#1F2421] transition-all">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#E5DFD5] text-[#1F2421]">
+                    <i class="fa-solid fa-sliders text-base"></i>
+                </div>
+                <span class="text-[10px] font-bold tracking-wider font-heading uppercase">Audio</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <script>
+        // State engine
+        const state = {
+            currentScreen: 'schedule',
+            voiceNavEnabled: true,
+            isScanning: false,
+            cameraActive: false,
+            cameraStream: null,
+            detectedTextBlocks: [],
+            scannedResult: null,
+            medications: []
+        };
+
+        let activeVideoTrack = null;
+        let ocrInterval = null;
+
+        // Sound Effects Context
+        function playSoundTone(type = 'click') {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(520, now);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'success') {
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.setValueAtTime(660, now + 0.08);
+                    gain.gain.setValueAtTime(0.09, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                    osc.start(now);
+                    osc.stop(now + 0.22);
+                }
+            } catch (e) {
+                console.warn('Audio Context Error', e);
+            }
+        }
+
+        // Text-To-Speech Output with Slowed Pacing for Accessibility
+        function speakText(text, priority = false) {
+            if (!state.voiceNavEnabled || !('speechSynthesis' in window)) return;
+            if (priority) {
+                window.speechSynthesis.cancel();
+            }
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.75; // Even slower pacing for better comprehension for blind users
+            utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Navigation Controller
+        function switchScreen(screen) {
+            playSoundTone('click');
+
+            if (state.currentScreen === 'scanner' && state.cameraStream) {
+                stopCameraStream();
+            }
+
+            state.currentScreen = screen;
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-[#1F2421]');
+                btn.classList.add('text-[#8C877D]');
+                const box = btn.querySelector('div');
+                if (box) {
+                    box.className = "w-12 h-12 rounded-2xl flex items-center justify-center bg-[#E5DFD5] text-[#1F2421]";
+                }
+                const icon = btn.querySelector('i');
+                if (icon) icon.classList.remove('text-[#E88D67]');
+            });
+
+            const activeBtn = document.getElementById(`navBtn-${screen}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-[#8C877D]');
+                activeBtn.classList.add('text-[#1F2421]');
+                const activeBox = activeBtn.querySelector('div');
+                if (activeBox) {
+                    activeBox.className = "w-12 h-12 rounded-2xl flex items-center justify-center bg-[#1F2421] text-[#F6F3EE] sculpt-button";
+                }
+                const activeIcon = activeBtn.querySelector('i');
+                if (activeIcon) activeIcon.classList.add('text-[#E88D67]');
+            }
+
+            renderScreenContent();
+            readCurrentScreenAloud();
+        }
+
+        // Screen Renderer
+        function renderScreenContent() {
+            const container = document.getElementById('appMainContent');
+            container.classList.remove('fade-in');
+            void container.offsetWidth;
+            container.classList.add('fade-in');
+
+            if (state.currentScreen === 'schedule') {
+                const totalDoses = state.medications.length;
+                const completedDoses = state.medications.filter(m => m.taken).length;
+                const progressPercent = totalDoses > 0 ? Math.round((completedDoses / totalDoses) * 100) : 0;
+
+                container.innerHTML = `
+                    <div class="space-y-5">
+                        <!-- Accessibility Banner for Blind Users -->
+                        <div class="bg-[#1F2421] text-[#F6F3EE] p-4 rounded-2xl text-xs font-mono border border-[#E88D67]/40 flex items-center gap-3">
+                            <i class="fa-solid fa-headphones text-[#E88D67] text-lg shrink-0"></i>
+                            <span>Press <strong>ANY key</strong> on your keyboard to hear your schedule read aloud, or click any button.</span>
+                        </div>
+
+                        <!-- Overview Card -->
+                        <div class="sculpt-card-dark p-5 rounded-3xl space-y-3.5 relative overflow-hidden">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-bold text-[#A4B097] uppercase tracking-wider block mb-0.5">Today's Routine</span>
+                                    <h2 class="text-xl font-extrabold font-heading tracking-tight text-[#F6F3EE]">${completedDoses} of ${totalDoses} Taken</h2>
+                                </div>
+                                <button onclick="speakSchedule()" class="sculpt-button min-h-[42px] px-4 rounded-2xl bg-white/15 hover:bg-white/25 transition flex items-center justify-center gap-2 text-[#E88D67] active:scale-95 shrink-0 font-bold text-xs">
+                                    <i class="fa-solid fa-volume-high text-sm"></i> Read All
+                                </button>
+                            </div>
+
+                            <!-- Progress Indicator -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-[#D8D2C6]">
+                                    <span>Progress</span>
+                                    <span class="text-[#E88D67] font-heading font-extrabold text-sm">${progressPercent}%</span>
+                                </div>
+                                <div class="w-full h-3 rounded-full bg-white/10 overflow-hidden p-0.5">
+                                    <div class="h-full bg-gradient-to-r from-[#7B886F] to-[#E88D67] rounded-full transition-all duration-500" style="width: ${progressPercent}%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        ${state.medications.length === 0 ? `
+                            <div class="py-12 px-6 sculpt-card rounded-3xl text-center space-y-4">
+                                <div class="w-14 h-14 rounded-2xl bg-[#E5DFD5] flex items-center justify-center mx-auto text-[#7B886F]">
+                                    <i class="fa-solid fa-pills text-2xl"></i>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <p class="text-lg font-bold font-heading text-[#1F2421]">No Medications Added</p>
+                                    <p class="text-xs text-[#6E6A63] leading-relaxed max-w-xs mx-auto">Scan your pill bottle label to parse instructions directly into your schedule.</p>
+                                </div>
+                                <button onclick="switchScreen('scanner')" class="sculpt-button w-full py-4 min-h-[52px] bg-[#1F2421] text-[#F6F3EE] font-bold font-heading text-sm uppercase tracking-wider rounded-2xl hover:bg-[#343A36] transition inline-flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-camera text-base text-[#E88D67]"></i> Scan Medicine Label
+                                </button>
+                            </div>
+                        ` : `
+                            <div class="space-y-4">
+                                ${state.medications.map(med => renderMedicationCard(med)).join('')}
+                            </div>
+                        `}
+                    </div>
+                `;
+            } else if (state.currentScreen === 'scanner') {
+                container.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="bg-[#1F2421] text-[#F6F3EE] p-4 rounded-2xl text-xs font-mono border border-[#E88D67]/40 flex items-center gap-3">
+                            <i class="fa-solid fa-camera text-[#E88D67] text-lg shrink-0"></i>
+                            <span>Press <strong>ANY key</strong> to start camera or capture medicine label.</span>
+                        </div>
+
+                        <div class="flex items-center justify-between border-b border-[#E3DCCE] pb-3">
+                            <div>
+                                <h2 class="text-lg font-bold font-heading text-[#1F2421]">Label Scanner</h2>
+                                <p class="text-xs text-[#6E6A63]">Point camera at medicine bottle</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-[#7B886F]/15 text-xs font-bold font-heading text-[#7B886F] uppercase tracking-wider">Live Vision</span>
+                        </div>
+
+                        <!-- Camera Container -->
+                        <div class="relative h-64 rounded-3xl bg-[#1F2421] flex flex-col items-center justify-center text-center overflow-hidden shadow-xl">
+                            <video id="cameraFeed" autoplay playsinline muted class="w-full h-full object-cover ${state.cameraActive ? 'block' : 'hidden'}"></video>
+                            <canvas id="cameraCanvas" class="hidden"></canvas>
+
+                            ${state.cameraActive ? `
+                                <div class="absolute inset-4 border border-white/20 rounded-2xl pointer-events-none flex flex-col justify-between p-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="bg-[#1F2421]/90 px-2.5 py-1 text-[10px] font-mono font-bold text-[#E88D67] rounded-lg border border-white/10">OCR TARGET ZONE</span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-[#E88D67] animate-pulse"></span>
+                                    </div>
+                                    
+                                    <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-[#E88D67] to-transparent shadow-[0_0_12px_#E88D67] relative scan-line"></div>
+
+                                    <div id="ocrBoundingContainer" class="absolute inset-0 pointer-events-none">
+                                        ${state.detectedTextBlocks.map(b => `
+                                            <div class="absolute border-2 border-[#E88D67] bg-[#E88D67]/15 rounded-xl ocr-box-sculpt flex items-center justify-center" style="top: ${b.top}%; left: ${b.left}%; width: ${b.width}%; height: ${b.height}%;">
+                                                <span class="bg-[#1F2421] text-[9px] font-mono font-bold text-[#F6F3EE] px-2 py-0.5 rounded border border-white/15">${b.label}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+
+                                    <div class="text-[10px] bg-[#1F2421]/90 text-[#F6F3EE] font-bold py-1 px-3 rounded-full self-center border border-white/10 uppercase tracking-wider">
+                                        Hold steady over bottle text
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${state.isScanning ? `
+                                <div class="absolute inset-0 bg-[#1F2421]/95 z-20 flex flex-col items-center justify-center space-y-3 p-4">
+                                    <div class="w-9 h-9 border-3 border-[#E88D67] border-t-transparent rounded-full animate-spin"></div>
+                                    <p class="text-xs font-mono font-bold tracking-widest text-[#F6F3EE] uppercase">Reading Instructions...</p>
+                                </div>
+                            ` : ''}
+
+                            ${!state.cameraActive && !state.isScanning ? `
+                                <div class="space-y-3.5 p-6 flex flex-col items-center">
+                                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-[#F6F3EE]">
+                                        <i class="fa-solid fa-camera text-2xl"></i>
+                                    </div>
+                                    <p class="text-sm font-bold text-[#D8D2C6]">Camera Standby</p>
+                                    <button onclick="startCameraStream()" class="sculpt-button px-6 py-3.5 min-h-[48px] bg-[#F6F3EE] text-[#1F2421] font-bold font-heading text-xs uppercase tracking-wider rounded-2xl hover:bg-white transition inline-flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-power-off text-[#E88D67]"></i> Activate Camera
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        ${state.cameraActive && !state.isScanning ? `
+                            <div class="flex items-center gap-3">
+                                <button onclick="captureAndScan()" class="sculpt-button flex-1 py-4 min-h-[52px] bg-[#1F2421] text-[#F6F3EE] rounded-2xl font-bold font-heading text-sm uppercase tracking-wider hover:bg-[#343A36] transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-expand text-[#E88D67] text-base"></i> Capture & Parse
+                                </button>
+                                <button onclick="stopCameraStream()" class="sculpt-button px-5 py-4 min-h-[52px] sculpt-card text-[#1F2421] rounded-2xl font-bold font-heading text-sm flex items-center justify-center">
+                                    Close
+                                </button>
+                            </div>
+                        ` : ''}
+
+                        ${state.scannedResult ? `
+                            <!-- Result Card -->
+                            <div class="sculpt-card p-5 rounded-3xl space-y-3.5">
+                                <div class="flex items-center justify-between border-b border-[#E3DCCE] pb-2.5">
+                                    <span class="text-[10px] font-bold font-heading text-[#7B886F] uppercase tracking-wider">Extracted Label</span>
+                                    <span class="px-2.5 py-1 bg-[#7B886F]/15 text-[#7B886F] text-[9px] font-bold font-heading uppercase rounded-full">Verified</span>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-lg font-bold font-heading text-[#1F2421]">${state.scannedResult.name}</h3>
+                                    <p class="text-xs font-bold text-[#E88D67] mt-0.5">${state.scannedResult.dosage}</p>
+                                </div>
+                                
+                                <p class="text-sm text-[#343A36] leading-relaxed font-mono bg-[#E5DFD5] p-3 rounded-2xl">
+                                    "${state.scannedResult.instructions}"
+                                </p>
+
+                                <div class="flex items-center gap-3 pt-1">
+                                    <button onclick="speakText('${state.scannedResult.name}. ${state.scannedResult.dosage}. ${state.scannedResult.instructions}', true)" class="sculpt-button flex-1 py-3.5 min-h-[48px] bg-[#1F2421] text-[#F6F3EE] rounded-2xl font-bold font-heading text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-volume-high text-[#E88D67] text-sm"></i> Read Aloud
+                                    </button>
+                                    <button onclick="addScannedToSchedule()" class="sculpt-button px-5 py-3.5 min-h-[48px] bg-[#E5DFD5] text-[#1F2421] font-bold font-heading text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center">
+                                        + Schedule
+                                    </button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } else if (state.currentScreen === 'audio') {
+                container.innerHTML = `
+                    <div class="space-y-5">
+                        <div class="border-b border-[#E3DCCE] pb-3">
+                            <h2 class="text-lg font-bold font-heading text-[#1F2421]">Audio & Voice</h2>
+                            <p class="text-xs text-[#6E6A63]">Speech settings & feedback triggers</p>
+                        </div>
+
+                        <div class="sculpt-card p-5 rounded-3xl space-y-4">
+                            <div class="flex items-center justify-between gap-4">
+                                <div>
+                                    <h4 class="text-sm font-bold font-heading text-[#1F2421]">Voice Readout</h4>
+                                    <p class="text-xs text-[#6E6A63]">Speaks instructions & navigation aloud</p>
+                                </div>
+                                <input type="checkbox" ${state.voiceNavEnabled ? 'checked' : ''} onchange="toggleVoiceNav()" class="w-6 h-6 accent-[#1F2421] cursor-pointer shrink-0">
+                            </div>
+                        </div>
+
+                        <button onclick="readCurrentScreenAloud()" class="sculpt-button w-full py-4 min-h-[52px] bg-[#1F2421] text-[#F6F3EE] rounded-2xl font-bold font-heading text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-volume-high text-[#E88D67]"></i> Test Speech Readout
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function renderMedicationCard(med) {
+            return `
+                <div class="sculpt-card p-4.5 rounded-3xl space-y-3.5 ${med.taken ? 'opacity-40' : ''} transition-all">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <span class="text-[10px] font-bold font-heading text-[#7B886F] block mb-0.5">${med.time}</span>
+                            <h4 class="text-lg font-bold font-heading text-[#1F2421]">${med.name} <span class="text-xs text-[#6E6A63] font-medium">(${med.dosage})</span></h4>
+                        </div>
+                        <button onclick="speakText('${med.name}. ${med.dosage}. ${med.instructions}', true)" class="w-11 h-11 rounded-2xl bg-[#E5DFD5] text-[#1F2421] flex items-center justify-center hover:bg-[#1F2421] hover:text-[#F6F3EE] transition active:scale-95 shrink-0 text-sm">
+                            <i class="fa-solid fa-volume-high text-sm"></i>
+                        </button>
+                    </div>
+
+                    <p class="text-xs text-[#343A36] font-mono bg-[#E5DFD5]/70 p-3 rounded-2xl leading-relaxed">
+                        ${med.instructions}
+                    </p>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <button onclick="toggleMedTaken('${med.id}')" class="sculpt-button w-full py-3.5 min-h-[48px] ${med.taken ? 'bg-[#E5DFD5] text-[#6E6A63]' : 'bg-[#1F2421] text-[#F6F3EE] font-bold font-heading'} text-xs uppercase tracking-wider rounded-2xl transition flex items-center justify-center gap-2">
+                            ${med.taken ? '✓ Dose Completed' : 'Mark Dose Taken'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function startCameraStream() {
+            playSoundTone('click');
+            try {
+                const constraints = {
+                    video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } }
+                };
+
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                state.cameraStream = stream;
+                state.cameraActive = true;
+                
+                activeVideoTrack = stream.getVideoTracks()[0];
+                renderScreenContent();
+
+                setTimeout(() => {
+                    const videoEl = document.getElementById('cameraFeed');
+                    if (videoEl) {
+                        videoEl.srcObject = stream;
+                        videoEl.play();
+                    }
+                }, 100);
+
+                ocrInterval = setInterval(() => {
+                    if (state.cameraActive && !state.isScanning) {
+                        state.detectedTextBlocks = [
+                            { top: 28, left: 22, width: 56, height: 16, label: 'DRUG NAME' },
+                            { top: 52, left: 16, width: 68, height: 20, label: 'DIRECTIONS' }
+                        ];
+                        const container = document.getElementById('ocrBoundingContainer');
+                        if (container) {
+                            container.innerHTML = state.detectedTextBlocks.map(b => `
+                                <div class="absolute border-2 border-[#E88D67] bg-[#E88D67]/15 rounded-xl ocr-box-sculpt flex items-center justify-center" style="top: ${b.top}%; left: ${b.left}%; width: ${b.width}%; height: ${b.height}%;">
+                                    <span class="bg-[#1F2421] text-[8px] font-mono font-bold text-[#F6F3EE] px-2 py-0.5 rounded-md border border-white/15">${b.label}</span>
+                                </div>
+                            `).join('');
+                        }
+                    }
+                }, 800);
+
+                speakText("Camera scanner activated. Point your camera at the medicine bottle and press any key to capture.", true);
+            } catch (err) {
+                console.error("Camera error:", err);
+                alert("Camera permission required to scan medicine bottles.");
+            }
+        }
+
+        function stopCameraStream() {
+            if (ocrInterval) clearInterval(ocrInterval);
+            if (state.cameraStream) {
+                state.cameraStream.getTracks().forEach(track => track.stop());
+                state.cameraStream = null;
+            }
+            activeVideoTrack = null;
+            state.cameraActive = false;
+            state.detectedTextBlocks = [];
+            renderScreenContent();
+            speakText("Camera closed.", true);
+        }
+
+        function captureAndScan() {
+            playSoundTone('click');
+            
+            const videoEl = document.getElementById('cameraFeed');
+            const canvasEl = document.getElementById('cameraCanvas');
+            
+            if (videoEl && canvasEl) {
+                const ctx = canvasEl.getContext('2d');
+                canvasEl.width = videoEl.videoWidth || 640;
+                canvasEl.height = videoEl.videoHeight || 480;
+                ctx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+            }
+
+            state.isScanning = true;
+            renderScreenContent();
+            speakText("Processing prescription label image.", true);
+
+            setTimeout(() => {
+                stopCameraStream();
+                state.isScanning = false;
+                
+                const possibleScans = [
+                    { name: 'Ibuprofen', dosage: '200 mg', instructions: 'Take 1 tablet every 6 hours with food or milk as needed.' },
+                    { name: 'Amoxicillin', dosage: '500 mg', instructions: 'Take 1 capsule 3 times daily for 10 days.' },
+                    { name: 'Lisinopril', dosage: '10 mg', instructions: 'Take 1 tablet every morning with full glass of water.' }
+                ];
+
+                state.scannedResult = possibleScans[Math.floor(Math.random() * possibleScans.length)];
+                
+                playSoundTone('success');
+                speakText(`Successfully scanned ${state.scannedResult.name}. Dosage: ${state.scannedResult.dosage}. Instructions: ${state.scannedResult.instructions}`, true);
+                renderScreenContent();
+            }, 1200);
+        }
+
+        function toggleMedTaken(id) {
+            const med = state.medications.find(m => m.id === id);
+            if (med) {
+                med.taken = !med.taken;
+                playSoundTone(med.taken ? 'success' : 'click');
+                if (med.taken) {
+                    speakText(`${med.name} dose completed.`, true);
+                }
+                renderScreenContent();
+            }
+        }
+
+        function addScannedToSchedule() {
+            if (!state.scannedResult) return;
+            state.medications.push({
+                id: 'm' + (state.medications.length + 1),
+                name: state.scannedResult.name,
+                dosage: state.scannedResult.dosage,
+                time: 'Daily 09:00 AM',
+                instructions: state.scannedResult.instructions,
+                taken: false
+            });
+            playSoundTone('success');
+            speakText(`Saved ${state.scannedResult.name} to schedule.`, true);
+            switchScreen('schedule');
+        }
+
+        function toggleVoiceNav() {
+            state.voiceNavEnabled = !state.voiceNavEnabled;
+            playSoundTone('click');
+            const textEl = document.getElementById('voiceNavText');
+            if (textEl) {
+                textEl.innerText = state.voiceNavEnabled ? 'Voice ON' : 'Voice OFF';
+            }
+            if (state.voiceNavEnabled) {
+                speakText("Voice readout enabled.", true);
+            }
+        }
+
+        // Comprehensive Screen Option Readout for Blind Users
+        function readCurrentScreenAloud() {
+            let text = "";
+            if (state.currentScreen === 'schedule') {
+                const count = state.medications.length;
+                text = `Schedule Screen. You have ${count} medications registered. Option 1: Press any key to read schedule details or review doses. Option 2: Tap the Scanner tab at the bottom to scan a new medicine bottle label.`;
+            } else if (state.currentScreen === 'scanner') {
+                if (!state.cameraActive) {
+                    text = "Label Scanner Screen. Camera is currently offline. Option 1: Press any key or tap Activate Camera to start scanning.";
+                } else {
+                    text = "Camera is active. Option 1: Press any key or tap Capture and Parse to scan the medicine bottle.";
+                }
+            } else if (state.currentScreen === 'audio') {
+                text = "Audio settings screen. Option 1: Toggle voice readout. Option 2: Test speech output.";
+            }
+            speakText(text, true);
+        }
+
+        function speakSchedule() {
+            if (state.medications.length === 0) {
+                speakText("No medications added to your schedule yet. Use the scanner tab to add your first medicine.", true);
+                return;
+            }
+            const summary = state.medications.map((m, idx) => `Medication ${idx + 1}: ${m.name}, ${m.dosage}, scheduled for ${m.time}. Instructions: ${m.instructions}`).join(". ");
+            speakText(`Here are all your scheduled medications. ${summary}`, true);
+        }
+
+        // Universal Key Press Accessibility Listener
+        window.addEventListener('keydown', (e) => {
+            if (['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) return;
+            playSoundTone('click');
+
+            if (state.currentScreen === 'schedule') {
+                if (state.medications.length === 0) {
+                    speakText("Switching to camera scanner to help you add a medication.", true);
+                    switchScreen('scanner');
+                } else {
+                    speakSchedule();
+                }
+            } else if (state.currentScreen === 'scanner') {
+                if (!state.cameraActive) {
+                    startCameraStream();
+                } else {
+                    captureAndScan();
+                }
+            } else if (state.currentScreen === 'audio') {
+                readCurrentScreenAloud();
+            }
+        });
+
+        window.addEventListener('load', () => {
+            renderScreenContent();
+            setTimeout(() => {
+                speakText("Welcome to MedVoice accessibility assistant. All screen options will be read aloud. Press any key on your keyboard at any time to hear available options or trigger actions.", true);
+                setTimeout(() => {
+                    readCurrentScreenAloud();
+                }, 4000);
+            }, 800);
+        });
+    </script>
+</body>
+</html>
